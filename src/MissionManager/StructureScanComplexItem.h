@@ -28,6 +28,8 @@ public:
     StructureScanComplexItem(Vehicle* vehicle, QObject* parent = NULL);
 
     Q_PROPERTY(CameraCalc*      cameraCalc                  READ cameraCalc                                                 CONSTANT)
+    Q_PROPERTY(Fact*            gimbalPitch                 READ gimbalPitch                                                CONSTANT)
+    Q_PROPERTY(Fact*            gimbalYaw                   READ gimbalYaw                                                  CONSTANT)
     Q_PROPERTY(Fact*            altitude                    READ altitude                                                   CONSTANT)
     Q_PROPERTY(Fact*            structureHeight             READ structureHeight                                            CONSTANT)
     Q_PROPERTY(Fact*            layers                      READ layers                                                     CONSTANT)
@@ -45,6 +47,8 @@ public:
 
     bool            altitudeRelative        (void) const { return _altitudeRelative; }
     int             cameraShots             (void) const;
+    Fact*           gimbalPitch             (void) { return &_gimbalPitchFact; }
+    Fact*           gimbalYaw               (void) { return &_gimbalYawFact; }
     double          timeBetweenShots        (void);
     QGCMapPolygon*  structurePolygon        (void) { return &_structurePolygon; }
     QGCMapPolygon*  flightPolygon           (void) { return &_flightPolygon; }
@@ -107,6 +111,7 @@ private slots:
     void _updateCoordinateAltitudes (void);
     void _rebuildFlightPolygon      (void);
     void _recalcCameraShots         (void);
+    void _resetGimbal               (void);
     void _recalcLayerInfo           (void);
 
 private:
@@ -135,10 +140,14 @@ private:
     Fact    _altitudeFact;
     Fact    _structureHeightFact;
     Fact    _layersFact;
+    Fact    _gimbalPitchFact;
+    Fact    _gimbalYawFact;
 
     static const char* _altitudeFactName;
     static const char* _structureHeightFactName;
     static const char* _layersFactName;
+    static const char* _gimbalPitchFactName;
+    static const char* _gimbalYawFactName;
 
     static const char* _jsonCameraCalcKey;
     static const char* _jsonAltitudeRelativeKey;
